@@ -1,6 +1,4 @@
-"""	This is a copy from https://github.com/umarsear/ESP8266-Connected-MP3-Player/blob/master/mp3.py
-	Thank you umarsear!
-
+"""
 	protocol defintion file for the CATALEX seriel MP3 player
 	The board uses the YX5300 MP3 audio chip. It supports 8KHz to 48KHz sampling frequencies for MP3 and WAV file format
 	

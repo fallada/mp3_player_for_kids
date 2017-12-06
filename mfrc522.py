@@ -89,7 +89,7 @@ class MFRC522:
 		if cmd == 0x0C:
 			self._sflags(0x0D, 0x80)
 
-		i = 2000
+		i = 200
 		while True:
 			n = self._rreg(0x04)
 			i -= 1

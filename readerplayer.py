@@ -1,4 +1,5 @@
-import mfrc522, rfidcards
+import mfrc522, rfidcards, time
+from machine import Pin
 
 DEBUG = False
 
@@ -16,6 +17,8 @@ class ReaderPlayer:
     #STOPPED = 0   #no need yet
     PLAYING = 1 #tag placed on reader
     PAUSED = 2  #no tag on reader
+    LED_PIN = 15 #D8
+    BUTTON_PIN = 12 #D6
     SPECIAL_CARDS = {
         'end_program': '0xc0c92583',
         #'next_song': '0xc0125e7a',
@@ -23,6 +26,9 @@ class ReaderPlayer:
         }
     
     def __init__(self, mp3Player):
+        self.led = Pin(self.LED_PIN, Pin.OUT)
+        self.button = Pin(self.BUTTON_PIN, Pin.IN, Pin.PULL_UP)
+        self.button_last_pressed = time.time()
         self.mp3Player = mp3Player
         self.status = None
         self.current_folder = None
@@ -36,7 +42,7 @@ class ReaderPlayer:
         """
         uart_return_code = self.mp3Player.uart.readline()
         _debug("uart_return_code", uart_return_code)
-        #uart_return_code == b'~\xff\x06=\x00\x00\x12\xfe\xac\xef~\xff\x06=\x00\x00\x12\xfe\xac\xef'
+        # uart_return_code == b'~\xff\x06=\x00\x00\x12\xfe\xac\xef~\xff\x06=\x00\x00\x12\xfe\xac\xef'
         return uart_return_code and b'\x06=' in uart_return_code 
 
     def _uid(self, raw_uid):
@@ -56,7 +62,7 @@ class ReaderPlayer:
     
     def card_still_there(self):
         # still current card? this is veryfast compared to rdr.request()
-        (stat, raw_uid) = self.rdr.anticoll()
+        stat, raw_uid = self.rdr.anticoll()
         _debug('card still there', stat)
         return stat == self.rdr.OK
 
@@ -66,7 +72,7 @@ class ReaderPlayer:
         try:
             self._do()
         except KeyboardInterrupt:
-            #thrown from time to time from the reader...  no idea why.
+            # thrown from time to time from the reader...  no idea why.
             return
         
     def _do(self):
@@ -74,18 +80,29 @@ class ReaderPlayer:
             if self.song_just_finished():
                 _debug("next")
                 self.mp3Player.next()
-            if self.card_still_there():
-                return
-            else:
+            if not self.card_still_there():
                 self.pause()
+                #sometimes pause gets ignored by the player, so lets pause again, can't harm.
+                time.sleep(0.1)
+                self.pause()
+            else:
+                if not self.button.value():
+                    #button pressed
+                    if time.time() - self.button_last_pressed >= 2:
+                        #mind. 2 Sekunde seit letztem mal
+                        self.mp3Player.next()
+                        self.button_last_pressed = time.time()
+                return
+
         elif self.status == self.PAUSED:
             #resume folder or play new one
-            #also check specia cards
+            #also check special cards
             uid = self.get_card_id()
             _debug("uid", uid)
             if not uid:
                 #still no card, still paused
-                self.pause() #sometimes pause gets ignored by the player, so lets pause again, can't harm.
+                #auskommentiert wegen webplayer
+                #self.pause() #sometimes pause gets ignored by the player, so lets pause again, can't harm.
                 return
             if uid == self.SPECIAL_CARDS["end_program"]:
                 self.mp3Player.stop()
@@ -108,15 +125,17 @@ class ReaderPlayer:
         self.mp3Player.play_folder(folder_id + 1)
         _debug("play_folder", folder_id)
         self.status = self.PLAYING
+        self.led.on()
         self.current_folder = folder_id
         
     def resume(self):
         self.mp3Player.resume()
         _debug("resume")
         self.status = self.PLAYING
+        self.led.on()
         
     def pause(self):
         self.mp3Player.pause()
         _debug("pause")
         self.status = self.PAUSED
-    
+        self.led.off()    

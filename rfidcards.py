@@ -11,7 +11,7 @@ class RfidCards:
         try:
             f = open(self.FILE_NAME)
         except OSError:
-            #no file yet
+            # no file yet - so creaty it initially
             self._dump_cards()
             f = open(self.FILE_NAME)
         self.all_cards = ujson.loads(f.read())
@@ -25,7 +25,7 @@ class RfidCards:
     def add_card(self, card):
         self.all_cards.append(card)
         self._dump_cards()
-        self._load_cards()  #just to see bugs early
+        self._load_cards()  # just to see bugs early
         
     def card_index(self, card):
         try:
