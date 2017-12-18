@@ -75,21 +75,21 @@ Connect the card reader like this:
     D1  <---------->  RST
     3v3 <----------> 3.3V
 
-# Audio Amplifier #
+## Audio Amplifier ##
 
 Connecting the PAM8403 is pretty straightforward. You connect "Power +" with the power supply from the Wemos. You can choose the 5V connector or 3.3V. PAM8403 is not choosy. The sound input is labled "L/G/R". "rout/lout" is the output and we connect it with the speaker boxes.
 
-# Denoising #
+## Denoising ##
 
 At first I could hear a regular tac-tac-tac-sound. Two 1000μF capacitors helped. I put one very close to the power supply between 5V and G at the Wemos. The second one I connected with its long leg to "power +" at the PAM8403 and with its short leg to Ground ("G" at the Wemos D1 Mini).
 
-# MP3-Directory #
+## MP3-Directory ##
 
 You need to save the files in the directory exactly like [documented by catalex]: /01/001xxx.mp3
 
 [documented by catalex]: http://geekmatic.in.ua/pdf/Catalex_MP3_board.pdf
 
-# Blog #
+## Blog ##
 
 More details and pictures [on my blog].
 
