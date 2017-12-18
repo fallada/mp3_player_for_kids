@@ -13,20 +13,20 @@ You will need these parts:
  * RC522 MFRC-522 Card Read Antenna RF Module RFID Reader
  * PAM8403 5V 2 Channel USB Power Audio Amplifier
 
-For the "music-chips" I used second hand poker-chips and put [NFC Sticker-Tags] on them. Also for noise-rduction you will need two 1000μF (35V) capacitors on the right places. 
+For the "music-chips" I used second hand poker-chips and put [NFC Sticker-Tags] on them. Also for noise-reduction you will need two 1000μF (35V) capacitors. 
 
 [NFC Sticker-Tags]: https://www.amazon.de/gp/product/B01HZWA0Z0/ref=as_li_tl?ie=UTF8&camp=1638&creative=6742&creativeASIN=B01HZWA0Z0&linkCode=as2&tag=fallada-21&linkId=9c814fe6c1cf8baeb9f46970a6b323f9
 
 ## Put Micropython on the Wemos ##
 
-You can download Micropython for the module [here] [micropython download]. Instructions for the deployment you find [here] [micropython install]. For me this worked:
+You can download Micropython for the module [here][micropython download]. Instructions for the deployment you find [here][micropython install]. For me this line worked well:
 
     sudo esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 esp8266-20171101-v1.9.3.bin
 
 [micropython download]: https://micropython.org/download/#esp8266
 [micropython install]: http://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/intro.html#deploying-the-firmware
 
-You can connect to the Wemos like this:
+You can now connect to the Wemos like this:
 
     sudo picocom /dev/ttyUSB0 -b115200
     >>> print("hello world")
@@ -77,7 +77,7 @@ Connect the card reader like this:
 
 # Audio Amplifier #
 
-Connecting the PAM8403 is pretty straightforware. You connect "Power +" with the power supply from the Wemos. You can choose the 5V connector or 3.3V. PAM8403 is not choosy. The sound input is labled "L/G/R", rout/lout is the output and we connect it with the speaker boxes.
+Connecting the PAM8403 is pretty straightforward. You connect "Power +" with the power supply from the Wemos. You can choose the 5V connector or 3.3V. PAM8403 is not choosy. The sound input is labled "L/G/R". "rout/lout" is the output and we connect it with the speaker boxes.
 
 # Denoising #
 
@@ -91,6 +91,6 @@ You need to save the files in the directory exactly like [documented by catalex]
 
 # Blog #
 
-More details and pictures you find in german [on my blog].
+More details and pictures [on my blog].
 
 [on my blog]: https://allgaier.org
