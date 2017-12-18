@@ -93,4 +93,4 @@ You need to save the files in the directory exactly like [documented by catalex]
 
 More details and pictures [on my blog].
 
-[on my blog]: https://allgaier.org
+[on my blog]: https://allgaier.org/category/microcontroller.html
