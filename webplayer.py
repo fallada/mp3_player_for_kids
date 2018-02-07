@@ -68,6 +68,9 @@ class WebPlayer:
                     self.mp3Player.resume()
                 elif path.startswith("/pause"):
                     self.mp3Player.pause()
+                elif path.startswith("/volume"):
+                    level=int(parameters.get("level",15))
+                    self.mp3Player.set_volume(level)
                 elif path.startswith("/halt"):
                     cl.close()
                     raise SystemExit('Stop program')
