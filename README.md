@@ -31,10 +31,6 @@ You can now connect to the Wemos like this:
     sudo picocom /dev/ttyUSB0 -b115200
     >>> print("hello world")
 
-For more comfort take a look at [mpfshell].
-
-[mpfshell]: https://github.com/wendlers/mpfshell
-
 ## Activate WebREPL ##
 
 To connect the Wemos Module to your WiFi you type this:
