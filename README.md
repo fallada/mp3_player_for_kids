@@ -1,8 +1,8 @@
  # Mp3 Player For Kids #
 
-This music-player for kids can be controlled by my one and a half year old daughter all by herself. It is also unexpensive and the code is in Python, so it can be easily adjusted to your own needs.
+ This music-player for kids can be controlled by my one and a half year old daughter all by herself. It is also unexpensive and the code is in Python, so it can be easily adjusted to your own needs.
 
-Video:
+ Video:
 
 [![MP3 Player For Kids on YouTube](https://img.youtube.com/vi/5Fa26CWGCNk/0.jpg)](https://www.youtube.com/watch?v=5Fa26CWGCNk)
 
